@@ -35,6 +35,31 @@ export const HeroCarouselBlock: Block = {
         { name: 'image', type: 'upload', relationTo: 'media', required: true },
         { name: 'ctaLabel', type: 'text', localized: true },
         { name: 'ctaUrl', type: 'text' },
+        // Optional — from revise-website.pptx (capital) slide 3's telepharmacy
+        // hero redesign: a small pill badge above the headline, a plain-text
+        // secondary CTA next to the primary button, a short checklist row
+        // beneath the CTAs, and up to 2 small floating cards overlaid on the
+        // photo (top-right / bottom-left). All optional so every existing
+        // hero slide on every other page renders unchanged.
+        { name: 'badgeLabel', type: 'text', localized: true },
+        { name: 'secondaryCtaLabel', type: 'text', localized: true },
+        { name: 'secondaryCtaUrl', type: 'text' },
+        {
+          name: 'checklistItems',
+          type: 'array',
+          maxRows: 4,
+          fields: [{ name: 'label', type: 'text', required: true, localized: true }],
+        },
+        {
+          name: 'floatingCards',
+          type: 'array',
+          maxRows: 2,
+          fields: [
+            { name: 'icon', type: 'upload', relationTo: 'media', required: true },
+            { name: 'label', type: 'text', required: true, localized: true },
+            { name: 'sublabel', type: 'text', localized: true },
+          ],
+        },
       ],
     },
   ],
@@ -280,6 +305,11 @@ export const TrustChecklistBlock: Block = {
       type: 'array',
       minRows: 1,
       fields: [
+        // Optional — "CARE YOU CAN TRUST" uses plain numbered steps (order
+        // matters, no icon). The telepharmacy "MEDICATION REFILL" instance
+        // (Revise Website.pptx (capital) slide 3, image7.png) swaps the
+        // number badge for a small icon per step instead.
+        { name: 'icon', type: 'upload', relationTo: 'media' },
         { name: 'title', type: 'text', required: true, localized: true },
         { name: 'description', type: 'textarea', localized: true },
       ],
@@ -300,6 +330,9 @@ export const TrustChecklistBlock: Block = {
     // the "CARE YOU CAN TRUST" instance has neither.
     { name: 'secondaryCtaLabel', type: 'text', localized: true },
     { name: 'secondaryCtaUrl', type: 'text' },
+    // Optional — the medication-refill instance has a small print note
+    // ("การจ่ายยาเป็นไปตามดุลยพินิจของเภสัชกร...") between the steps and the CTA.
+    { name: 'disclaimer', type: 'textarea', localized: true },
   ],
 }
 

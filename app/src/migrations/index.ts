@@ -34,6 +34,8 @@ import * as migration_20260821_092836_add_expert_tabs_default_role from './20260
 import * as migration_20260824_173315_add_promo_banner_article_grid_variant from './20260824_173315_add_promo_banner_article_grid_variant';
 import * as migration_20260825_162729_add_faq_index_block from './20260825_162729_add_faq_index_block';
 import * as migration_20260825_232901_add_faq_item_steps from './20260825_232901_add_faq_item_steps';
+import * as migration_20260918_191645_add_hero_carousel_badge_checklist_floating_cards from './20260918_191645_add_hero_carousel_badge_checklist_floating_cards';
+import * as migration_20260918_232731_add_trust_checklist_item_icon_and_disclaimer from './20260918_232731_add_trust_checklist_item_icon_and_disclaimer';
 
 export const migrations = [
   {
@@ -214,6 +216,16 @@ export const migrations = [
   {
     up: migration_20260825_232901_add_faq_item_steps.up,
     down: migration_20260825_232901_add_faq_item_steps.down,
-    name: '20260825_232901_add_faq_item_steps'
+    name: '20260825_232901_add_faq_item_steps',
+  },
+  {
+    up: migration_20260918_191645_add_hero_carousel_badge_checklist_floating_cards.up,
+    down: migration_20260918_191645_add_hero_carousel_badge_checklist_floating_cards.down,
+    name: '20260918_191645_add_hero_carousel_badge_checklist_floating_cards',
+  },
+  {
+    up: migration_20260918_232731_add_trust_checklist_item_icon_and_disclaimer.up,
+    down: migration_20260918_232731_add_trust_checklist_item_icon_and_disclaimer.down,
+    name: '20260918_232731_add_trust_checklist_item_icon_and_disclaimer'
   },
 ];

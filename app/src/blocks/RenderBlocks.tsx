@@ -166,6 +166,7 @@ export async function RenderBlocks({
               ctaUrl={block.ctaUrl}
               secondaryCtaLabel={block.secondaryCtaLabel}
               secondaryCtaUrl={block.secondaryCtaUrl}
+              disclaimer={block.disclaimer}
             />
           )
         case 'promoStrip':

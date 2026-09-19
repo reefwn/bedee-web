@@ -3,12 +3,32 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
+type FloatingCard = {
+  icon: { url?: string | null; alt?: string | null }
+  label: string
+  sublabel?: string | null
+}
+
 type Slide = {
   headline: string
   body?: string | null
   image: { url?: string | null; alt?: string | null }
   ctaLabel?: string | null
   ctaUrl?: string | null
+  badgeLabel?: string | null
+  secondaryCtaLabel?: string | null
+  secondaryCtaUrl?: string | null
+  checklistItems?: { label: string }[] | null
+  floatingCards?: FloatingCard[] | null
+}
+
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden className="h-4 w-4 flex-none text-secondary">
+      <circle cx="10" cy="10" r="10" fill="currentColor" opacity="0.15" />
+      <path d="M6 10.5l2.5 2.5L14 7.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
 }
 
 function usePrefersReducedMotion() {
@@ -101,7 +121,27 @@ export function HeroCarousel({
           key={index}
           className="hero-slide flex flex-1 flex-col items-center gap-4 [transition:opacity_400ms_var(--ease-out),transform_400ms_var(--ease-out)] md:flex-row md:gap-12 [@starting-style]:opacity-0 [@starting-style]:[transform:translateY(6px)]"
         >
-          <div className={`flex-1 text-center md:text-left ${useBleedImage ? 'md:max-w-[560px] md:flex-none' : 'md:flex-[3]'}`}>
+          <div
+            className={`flex-1 text-center md:text-left ${
+              useBleedImage ? 'md:max-w-[560px] md:flex-none' : slide.floatingCards?.length ? 'md:flex-[5]' : 'md:flex-[3]'
+            }`}
+          >
+            {slide.badgeLabel && (
+              <span
+                className={`mb-4 inline-flex items-center gap-2 rounded-pill px-4 py-2 text-sm font-semibold ${
+                  isLight ? 'bg-white text-primary shadow-sm' : 'bg-white/15 text-white'
+                }`}
+              >
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden className="h-4 w-4 flex-none">
+                  <path
+                    d="M10 2l6 2.4v5.1c0 4-2.6 6.8-6 8.5-3.4-1.7-6-4.5-6-8.5V4.4L10 2z"
+                    fill="currentColor"
+                    opacity="0.9"
+                  />
+                </svg>
+                {slide.badgeLabel}
+              </span>
+            )}
             {headingLevel === 'h2' ? (
               <h2
                 className={`whitespace-pre-line text-5xl font-semibold leading-[1.1] md:text-[72px] ${isLight ? 'text-primary' : ''}`}
@@ -120,15 +160,42 @@ export function HeroCarousel({
                 {slide.body}
               </p>
             )}
-            {slide.ctaLabel && slide.ctaUrl && (
-              <a
-                href={slide.ctaUrl}
-                className={`mt-6 inline-block rounded-pill px-6 py-3 text-[15px] font-medium text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:[box-shadow:0_0_0_3px_rgba(49,125,245,0.4)] ${
-                  isLight ? 'bg-accent' : 'bg-primary'
-                }`}
-              >
-                {slide.ctaLabel}
-              </a>
+            {(slide.ctaLabel || slide.secondaryCtaLabel) && (
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-6 md:justify-start">
+                {slide.ctaLabel && slide.ctaUrl && (
+                  <a
+                    href={slide.ctaUrl}
+                    className={`inline-block rounded-pill px-6 py-3 text-[15px] font-medium text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:[box-shadow:0_0_0_3px_rgba(49,125,245,0.4)] ${
+                      isLight ? 'bg-accent' : 'bg-primary'
+                    }`}
+                  >
+                    {slide.ctaLabel}
+                  </a>
+                )}
+                {slide.secondaryCtaLabel && slide.secondaryCtaUrl && (
+                  <a
+                    href={slide.secondaryCtaUrl}
+                    className={`border-b-2 pb-0.5 text-[15px] font-semibold focus-visible:outline-none focus-visible:[box-shadow:0_0_0_3px_rgba(49,125,245,0.4)] ${
+                      isLight ? 'border-primary text-primary' : 'border-white text-white'
+                    }`}
+                  >
+                    {slide.secondaryCtaLabel}
+                  </a>
+                )}
+              </div>
+            )}
+            {slide.checklistItems && slide.checklistItems.length > 0 && (
+              <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-start">
+                {slide.checklistItems.map((item, i) => (
+                  <li
+                    key={i}
+                    className={`flex items-center gap-2 text-sm font-medium ${isLight ? 'text-ink' : 'text-white/90'}`}
+                  >
+                    <CheckIcon />
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
           {useBleedImage ? (
@@ -143,16 +210,40 @@ export function HeroCarousel({
               />
             </div>
           ) : (
-            <div className="relative flex-1 md:flex-[2]">
+            <div
+              className={`relative w-full flex-none md:w-auto ${
+                slide.floatingCards?.length ? 'md:flex-[6] md:self-stretch' : 'md:flex-[2]'
+              }`}
+            >
               {slide.image?.url && (
                 <Image
                   src={slide.image.url}
                   alt={slide.image.alt || slide.headline}
                   width={640}
-                  height={654}
-                  className="max-h-[580px] w-full object-contain"
+                  height={slide.floatingCards?.length ? 480 : 654}
+                  className={
+                    slide.floatingCards?.length
+                      ? 'h-[280px] w-full rounded-[28px] object-cover shadow-lg sm:h-[360px] md:h-full'
+                      : 'max-h-[580px] w-full object-contain'
+                  }
                 />
               )}
+              {slide.floatingCards?.map((card, i) => (
+                <div
+                  key={i}
+                  className={`absolute flex max-w-[220px] items-center gap-3 rounded-2xl bg-white p-3 shadow-lg ${
+                    i === 0 ? '-top-4 right-4 sm:right-6' : '-bottom-4 left-4 sm:left-6'
+                  }`}
+                >
+                  {card.icon?.url && (
+                    <Image src={card.icon.url} alt={card.icon.alt || card.label} width={36} height={36} className="h-9 w-9 flex-none" />
+                  )}
+                  <div>
+                    <p className="text-sm font-semibold text-primary">{card.label}</p>
+                    {card.sublabel && <p className="text-xs text-muted">{card.sublabel}</p>}
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>

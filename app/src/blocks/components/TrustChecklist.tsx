@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 type Item = {
+  icon?: { url?: string | null; alt?: string | null } | null
   title: string
   description?: string | null
 }
@@ -29,11 +30,12 @@ export function TrustChecklist({
   ctaUrl,
   secondaryCtaLabel,
   secondaryCtaUrl,
+  disclaimer,
 }: {
   kicker?: string | null
   heading: string
   body?: string | null
-  image: { url?: string | null; alt?: string | null }
+  image: { url?: string | null; alt?: string | null; width?: number | null; height?: number | null }
   imageBadgeLabel?: string | null
   imageBadgeSub?: string | null
   items: Item[]
@@ -42,22 +44,28 @@ export function TrustChecklist({
   ctaUrl?: string | null
   secondaryCtaLabel?: string | null
   secondaryCtaUrl?: string | null
+  disclaimer?: string | null
 }) {
   const safeUrl = (url?: string | null) =>
     url && /^(https?:|mailto:|tel:|\/)/i.test(url) ? url : undefined
   const isSolid = ctaVariant === 'solid'
+  // A portrait source (an app/UI screenshot, e.g. telepharmacy's medication-
+  // refill instance) would get cropped top/bottom by the landscape object-cover
+  // box "CARE YOU CAN TRUST" (a real team photo) uses — show it uncropped on a
+  // neutral backdrop instead.
+  const isPortrait = Boolean(image?.width && image?.height && image.height > image.width)
 
   return (
     <section className="bg-panel-1 py-16">
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 md:flex-row md:items-center md:px-12">
-        <div className="relative flex-1">
+        <div className={`relative flex-1 ${isPortrait ? 'flex justify-center rounded-[28px] bg-panel-2 py-8' : ''}`}>
           {image?.url && (
             <Image
               src={image.url}
               alt={image.alt || heading}
-              width={900}
-              height={600}
-              className="w-full rounded-[28px] object-cover"
+              width={isPortrait ? 480 : 900}
+              height={isPortrait ? 600 : 600}
+              className={isPortrait ? 'h-auto w-auto max-w-[70%] object-contain' : 'w-full rounded-[28px] object-cover'}
             />
           )}
           {imageBadgeLabel && (
@@ -77,9 +85,19 @@ export function TrustChecklist({
             <ol className="mt-6 flex flex-col gap-5">
               {items.map((item, i) => (
                 <li key={i} className="flex gap-4">
-                  <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-panel-2 text-sm font-semibold text-primary">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
+                  {item.icon?.url ? (
+                    <Image
+                      src={item.icon.url}
+                      alt={item.icon.alt || ''}
+                      width={36}
+                      height={36}
+                      className="h-9 w-9 flex-none object-contain"
+                    />
+                  ) : (
+                    <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-panel-2 text-sm font-semibold text-primary">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  )}
                   <div>
                     <p className="font-semibold text-primary">{item.title}</p>
                     {item.description && (
@@ -89,6 +107,9 @@ export function TrustChecklist({
                 </li>
               ))}
             </ol>
+          )}
+          {disclaimer && (
+            <p className="mt-6 border-l-2 border-accent pl-3 text-xs leading-relaxed text-muted">{disclaimer}</p>
           )}
           {(ctaLabel && safeUrl(ctaUrl)) || (secondaryCtaLabel && safeUrl(secondaryCtaUrl)) ? (
             <div className="mt-8 flex flex-wrap items-center gap-6">
