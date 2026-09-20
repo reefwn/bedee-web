@@ -240,6 +240,15 @@ export const FAQBlock: Block = {
   fields: [
     { name: 'heading', type: 'text', localized: true },
     {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'plain',
+      options: [
+        { label: 'White background', value: 'plain' },
+        { label: 'Tinted background', value: 'tinted' },
+      ],
+    },
+    {
       name: 'items',
       type: 'array',
       minRows: 1,

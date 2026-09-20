@@ -121,7 +121,7 @@ export async function RenderBlocks({
         case 'richTextContent':
           return <RichTextContent key={i} heading={block.heading} content={block.content} />
         case 'faq':
-          return <FAQ key={i} heading={block.heading} items={block.items ?? []} />
+          return <FAQ key={i} heading={block.heading} items={block.items ?? []} variant={block.variant} />
         case 'faqIndex':
           return (
             <FAQIndex
