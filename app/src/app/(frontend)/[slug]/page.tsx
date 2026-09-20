@@ -15,6 +15,8 @@ import { extractProductListSchemas } from '@/lib/productSchema'
 
 export const dynamic = 'force-dynamic'
 
+const SITE_URL = 'https://bedee-payload.vercel.app'
+
 type Params = { slug: string }
 
 const getContent = cache(async (slug: string) => {
@@ -109,7 +111,7 @@ export default async function ContentPage({ params }: { params: Promise<Params> 
     '@type': 'WebPage',
     name: content.doc.title,
     description: content.type === 'page' ? content.doc.seo?.metaDescription ?? undefined : undefined,
-    url: `/${slug}`,
+    url: `${SITE_URL}/${slug}`,
     // AI SEO: freshness signal — AI search weights recency, and undated
     // content loses to dated content in citation ranking (ai-seo skill).
     dateModified: content.doc.updatedAt,
