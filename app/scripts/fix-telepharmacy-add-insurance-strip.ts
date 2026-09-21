@@ -5,8 +5,9 @@ const payload = await getPayload({ config })
 
 // Reuse the homepage's real "INSURANCE MADE EASIER" promoStrip content
 // verbatim (same real copy/CTA/icon) rather than re-entering it.
-const homepagePromoStrip = (await payload.find({ collection: 'pages', where: { slug: { equals: 'home' } }, limit: 1 }))
-  .docs[0].layout.find((b: any) => b.blockType === 'promoStrip' && b.kicker === 'INSURANCE MADE EASIER')
+const homepagePromoStrip = (
+  (await payload.find({ collection: 'pages', where: { slug: { equals: 'home' } }, limit: 1 })).docs[0]?.layout ?? []
+).find((b: any) => b.blockType === 'promoStrip' && b.kicker === 'INSURANCE MADE EASIER')
 if (!homepagePromoStrip) throw new Error('homepage insurance promoStrip not found — aborting')
 const { id: _omitId, ...insuranceStrip } = homepagePromoStrip
 

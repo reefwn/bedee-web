@@ -90,9 +90,11 @@ const standardIntro = {
   },
 }
 
-const homepageCredentialStrip = (
-  await payload.find({ collection: 'pages', where: { slug: { equals: 'home' } }, limit: 1 })
-).docs[0].layout.find((b: any) => b.blockType === 'credentialStrip')
+const homepageCredentialStripFound = (
+  (await payload.find({ collection: 'pages', where: { slug: { equals: 'home' } }, limit: 1 })).docs[0]?.layout ?? []
+).find((b: any) => b.blockType === 'credentialStrip')
+if (!homepageCredentialStripFound) throw new Error('homepage credentialStrip not found — aborting')
+const homepageCredentialStrip = homepageCredentialStripFound as any
 // Array-row ids (block.id, each items[].id) are global primary keys in
 // Postgres, not scoped per page — copying the homepage's exact ids onto a
 // second page's copy of this block collides. Strip only those, not the
