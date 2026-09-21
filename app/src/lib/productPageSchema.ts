@@ -1,6 +1,5 @@
 import type { Product } from '@/payload-types'
-
-const SITE_URL = 'https://bedee-payload.vercel.app'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export function buildProductPageSchema(product: Product) {
   const image = typeof product.image === 'object' ? product.image : null

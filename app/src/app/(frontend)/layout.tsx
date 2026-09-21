@@ -1,5 +1,6 @@
 import React from 'react'
 import { Noto_Sans_Thai } from 'next/font/google'
+import { SITE_URL } from '@/lib/siteUrl'
 import './globals.css'
 
 // Self-hosted at build time — no runtime dependency on fonts.googleapis.com
@@ -14,7 +15,7 @@ const notoSansThai = Noto_Sans_Thai({
 })
 
 export const metadata = {
-  metadataBase: new URL('https://bedee-payload.vercel.app'),
+  metadataBase: new URL(SITE_URL),
   title: 'BeDee — แพลตฟอร์มให้บริการด้านสุขภาพ',
   description: 'ปรึกษาหมอออนไลน์ ปรึกษาเภสัชกร ส่งยา — Powered by BDMS',
 }

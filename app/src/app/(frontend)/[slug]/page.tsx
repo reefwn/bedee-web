@@ -12,10 +12,9 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { extractHowToSchemas } from '@/lib/howToSchema'
 import { extractProductListSchemas } from '@/lib/productSchema'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export const dynamic = 'force-dynamic'
-
-const SITE_URL = 'https://bedee-payload.vercel.app'
 
 type Params = { slug: string }
 

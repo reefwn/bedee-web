@@ -11,10 +11,9 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { FAQ } from '@/blocks/components/FAQ'
 import { ArticleGrid } from '@/blocks/components/ArticleGrid'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export const dynamic = 'force-dynamic'
-
-const SITE_URL = 'https://bedee-payload.vercel.app'
 
 type Params = { category: string; slug: string }
 

@@ -6,10 +6,9 @@ import config from '@payload-config'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { ArticleImage } from '@/blocks/components/ArticleImage'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export const dynamic = 'force-dynamic'
-
-const SITE_URL = 'https://bedee-payload.vercel.app'
 
 // cache() dedupes this against generateMetadata's identical lookup for the
 // same request — same reasoning as the [slug] pages' getItem/getPost.

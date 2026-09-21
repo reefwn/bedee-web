@@ -9,10 +9,9 @@ import { HeroCarousel } from '@/blocks/components/HeroCarousel'
 import { LogoStrip } from '@/blocks/components/LogoStrip'
 import { CorporateInquiryForm } from '@/components/CorporateInquiryForm'
 import { ContactBeDeeButton } from '@/components/ContactBeDeeButton'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export const dynamic = 'force-dynamic'
-
-const SITE_URL = 'https://bedee-payload.vercel.app'
 
 const MEDIA_FILENAMES = [
   'corporate-hero.png',

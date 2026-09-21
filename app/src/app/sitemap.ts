@@ -1,10 +1,9 @@
 import type { MetadataRoute } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export const dynamic = 'force-dynamic'
-
-const SITE_URL = 'https://bedee-payload.vercel.app'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayload({ config })

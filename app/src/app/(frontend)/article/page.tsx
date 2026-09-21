@@ -7,10 +7,9 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { ArticleImage } from '@/blocks/components/ArticleImage'
 import { ArticleBanner } from '@/blocks/components/ArticleBanner'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export const dynamic = 'force-dynamic'
-
-const SITE_URL = 'https://bedee-payload.vercel.app'
 
 type SearchParams = { category?: string; page?: string }
 

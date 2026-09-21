@@ -2,7 +2,7 @@
 // page — see ai-seo skill. Generic across pages, sourced from the real
 // Products collection data (title/price/image/externalUrl), never fabricated.
 
-const SITE_URL = 'https://bedee-payload.vercel.app'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export type ProductListSchema = {
   '@context': 'https://schema.org'

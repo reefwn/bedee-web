@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next'
-
-const SITE_URL = 'https://bedee-payload.vercel.app'
+import { SITE_URL } from '@/lib/siteUrl'
 
 // AI SEO: explicit allow for AI-search crawlers (see ai-seo skill's bot
 // access checklist) — default allow-all already covers them, but naming

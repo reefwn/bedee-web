@@ -6,11 +6,10 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { extractHowToSchemas } from '@/lib/howToSchema'
+import { SITE_URL } from '@/lib/siteUrl'
 
 // Always reads live from Payload/Postgres — never statically prerendered.
 export const dynamic = 'force-dynamic'
-
-const SITE_URL = 'https://bedee-payload.vercel.app'
 const TITLE = 'BeDee — ปรึกษาหมอ เภสัชกร ส่งยา ช้อปสุขภาพออนไลน์ | Powered by BDMS'
 const DESCRIPTION =
   'ปรึกษาหมอและเภสัชกรออนไลน์ พร้อมส่งยาและสินค้าสุขภาพถึงบ้าน ดูแลสุขภาพครบวงจรตลอด 24 ชม. ภายใต้มาตรฐานเครือโรงพยาบาล BDMS'
